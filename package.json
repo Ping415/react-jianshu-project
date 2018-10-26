@@ -1,8 +1,9 @@
 {
-  "name": "react-jianshu-project",
+  "name": "react-todoList-project",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "antd": "^3.10.2",
     "react": "^16.6.0",
     "react-dom": "^16.6.0",
     "react-scripts": "2.0.5"
