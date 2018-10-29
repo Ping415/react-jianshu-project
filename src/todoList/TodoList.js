@@ -5,7 +5,7 @@ import TodoItem from "./TodoItem";
 
 import "./todoList.css";
 import "antd/dist/antd.css";
-import { Input, Button, Form, List, Popconfirm, message } from "antd";
+import { Input, Button, Form, List, Popconfirm, Avatar } from "antd";
 const FormItem = Form.Item;
 
 // 当组件的props或state发生改变，render函数重新执行，页面发生改变
@@ -16,7 +16,10 @@ class TodoList extends Component {
     super(props); //继承
     //组件状态
     this.state = {
-      inputValue: "",
+      form: {
+        inputValue: ""
+      },
+
       list: []
     };
     this.handleDeleteItem = this.handleDeleteItem.bind(this);
@@ -30,6 +33,7 @@ class TodoList extends Component {
 
   render() {
     // console.log("render");
+    const { getFieldDecorator } = this.props.form;
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
@@ -44,20 +48,31 @@ class TodoList extends Component {
       // Fragment占位符
       <Fragment>
         <div>
-          <Form onSubmit={this.handleBtnClick}>
+          <Form
+            ref="form"
+            onSubmit={this.handleBtnClick}
+            style={{ width: "80%", margin: "auto" }}
+          >
             <FormItem {...formItemLayout} label="输入内容">
-              {/* 光标聚焦 */}
-              {/* <label htmlFor="insertArea">输入内容：</label> */}
-              <Input
-                style={{ width: "80%" }}
-                ref={input => {
-                  this.input = input;
-                }}
-                id="insertArea"
-                value={this.state.inputValue}
-                onChange={this.handleInputChange}
-                placeholder="请输入内容"
-              />{" "}
+              {getFieldDecorator("inputValue", {
+                rules: [
+                  {
+                    required: true,
+                    message: "请输入内容"
+                  }
+                ]
+              })(
+                <Input
+                  style={{ width: "80%" }}
+                  ref={input => {
+                    this.input = input;
+                  }}
+                  id="insertArea"
+                  // value={this.state.form.inputValue}
+                  onChange={this.handleInputChange}
+                  placeholder="请输入内容"
+                />
+              )}
               <Button
                 type="primary"
                 style={{ marginLeft: "10px" }}
@@ -66,7 +81,6 @@ class TodoList extends Component {
                 提交
               </Button>
             </FormItem>
-            <FormItem />
           </Form>
         </div>
 
@@ -79,23 +93,35 @@ class TodoList extends Component {
         </ul> */}
 
         <List
-          style={{ width: "80%", margin: "auto" }}
+          style={{ width: "70%", margin: "auto" }}
           // header={<div>list</div>}
           // footer={<div>Footer</div>}
           bordered
           dataSource={this.state.list}
-          renderItem={item => (
+          renderItem={(item, index) => (
             <List.Item>
-              {item}
-              <Popconfirm
-                title="确定删除?"
-                onConfirm={this.handleDeleteItem}
-                onCancel={this.cancel}
-                okText="确定"
-                cancelText="取消"
-              >
-                <Button icon='delete' type="danger">删除</Button>
-              </Popconfirm>
+              {
+                <List.Item.Meta
+                  avatar={
+                    <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+                  }
+                  title={index + 1}
+                  description={item}
+                />
+              }
+              <div>
+                <Popconfirm
+                  title="确定删除?"
+                  onConfirm={this.handleDeleteItem}
+                  onCancel={this.cancel}
+                  okText="确定"
+                  cancelText="取消"
+                >
+                  <Button icon="delete" type="danger">
+                    删除
+                  </Button>
+                </Popconfirm>
+              </div>
             </List.Item>
           )}
         />
@@ -162,22 +188,28 @@ class TodoList extends Component {
     // const value = this.input.value
     const value = e.target.value;
     this.setState(() => ({
-      inputValue: value
+      form: {
+        inputValue: value
+      }
     }));
     // this.setState({ inputValue: e.target.value });
   };
   handleBtnClick = () => {
     //prevState之前的数据
     //setState 接收函数作为第二个参数，异步执行完函数后执行
-    this.setState(
-      prevState => ({
-        list: [...prevState.list, prevState.inputValue],
-        inputValue: ""
-      }),
-      () => {
-        // console.log(this.ul.querySelectorAll("div").length);
+    this.props.form.validateFields(err => {
+      if (!err) {
+        this.setState(
+          prevState => ({
+            list: [...prevState.list, prevState.form.inputValue]
+          }),
+          () => {
+            this.props.form.resetFields();
+            // console.log(this.ul.querySelectorAll("div").length);
+          }
+        );
       }
-    );
+    });
 
     // this.setState({
     //   //...展开运算符，将数组内容全部展开，拼接成新数组
@@ -203,10 +235,8 @@ class TodoList extends Component {
     });
   }
   cancel() {
-    console.log("cancel")
+    console.log("cancel");
   }
 }
-
-
 
 export default Form.create()(TodoList);

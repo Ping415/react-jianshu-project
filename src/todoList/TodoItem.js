@@ -43,6 +43,6 @@ TodoItem.propTypes = {
 };
 
 //默认值
-TodoItem.defaultProps = {};
+// TodoItem.defaultProps = {};
 
 export default TodoItem;
