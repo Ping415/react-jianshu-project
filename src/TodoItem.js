@@ -12,13 +12,13 @@ class TodoItem extends Component {
   //当一个组件从父组件接受参数，只要父组件的render函数被重新执行，子组件的这个生命周期函数就被执行
   //如果这个组件第一次存在于父组件中，不会执行，如果已经存在，被执行
   componentWillReceiveProps() {
-    console.log('child componentWillReceiveProps')
+    // console.log('child componentWillReceiveProps')
   }
 
   
   //当组件即将被页面中移除
   componentWillUnmount() {
-    console.log('child componentWillUnmount')
+    // console.log('child componentWillUnmount')
   }
 
   render() {

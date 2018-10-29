@@ -1,8 +1,10 @@
 import React, { Component, Fragment } from "react";
+import "./mock/mock";
+import axios from "axios";
 import TodoItem from "./TodoItem";
 
 // 当组件的props或state发生改变，render函数重新执行，页面发生改变
-//Fragment占位符
+
 class TodoList extends Component {
   //最优先执行
   constructor(props) {
@@ -18,13 +20,13 @@ class TodoList extends Component {
   //挂载：组件第一次被放到页面时
   //当组件即将被挂载到页面时执行
   componentWillMount() {
-    console.log('componentWillMount')
+    // console.log("componentWillMount");
   }
 
-  
   render() {
-    console.log('render')
+    // console.log("render");
     return (
+      // Fragment占位符
       <Fragment>
         <div>
           {/* 光标聚焦 */}
@@ -54,24 +56,25 @@ class TodoList extends Component {
 
   //页面挂载之后执行
   componentDidMount() {
-    console.log('componentDidMount')
+    // console.log("componentDidMount");
+    this.getItemContent()
   }
 
   //组件更新前执行
   shouldComponentUpdate() {
-    console.log('shouldComponentUpdate')
-    return true
+    // console.log("shouldComponentUpdate");
+    return true;
     //false 组件不需更新
   }
 
   //组件更新之前，在shouldComponentUpdate后执行，shouldComponentUpdate但会true执行，false不执行
   componentWillUpdate() {
-    console.log("componentWillUpdate")
+    // console.log("componentWillUpdate");
   }
 
   //组件更新完成后执行
   componentDidUpdate() {
-    console.log('componentDidUpdate')
+    // console.log("componentDidUpdate");
   }
 
   getTodoItem() {
@@ -84,6 +87,23 @@ class TodoList extends Component {
           deleteItem={this.handleDeleteItem}
         />
       );
+    });
+  }
+
+  getItemContent() {
+    axios.get("/number").then(res => {
+      if(res.data.code === 0){
+        const list = res.data.data.list.map(item => {
+        return item.title
+      });
+      this.setState(() => ({
+        list: list
+      }));
+      } else {
+        console.log("error")
+      }
+      
+      console.log(res.data)
     });
   }
 
