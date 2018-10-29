@@ -179,7 +179,7 @@ class TodoList extends Component {
           return item.title;
         });
         const action = {
-          type: 'get_state_list',
+          type: 'get_todo_list',
           value: list
         }
         store.dispatch(action)
@@ -253,14 +253,21 @@ class TodoList extends Component {
     // this.setState({
     //   list: list
     // })
+    const list = [...this.state.list]
 
-    this.setState(prevState => {
-      const list = [...prevState.list];
-      list.splice(index, 1);
-      return {
-        list
-      };
-    });
+    const action = {
+      type: 'delete_list_item',
+      value: list.splice(index, 1)
+    }
+    store.dispatch(action)
+
+    // this.setState(prevState => {
+    //   const list = [...prevState.list];
+    //   list.splice(index, 1);
+    //   return {
+    //     list
+    //   };
+    // });
   }
   cancel() {
     console.log("cancel");

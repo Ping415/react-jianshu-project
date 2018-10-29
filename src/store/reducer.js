@@ -9,7 +9,7 @@ const defaultState = {
 
 //reducer可以接收state但绝不可以修改state
 export default (state = defaultState, action) => {
-  if(action.type === 'get_state_list') {
+  if(action.type === 'get_todo_list') {
     const newState = JSON.parse(JSON.stringify(state))
     newState.list = action.value;
     return newState
@@ -25,6 +25,13 @@ export default (state = defaultState, action) => {
     const newState = JSON.parse(JSON.stringify(state))
     newState.list.push(newState.form.inputValue)
     newState.form.inputValue = ''
+    return newState
+  }
+
+  if(action.type === 'delete_list_item') {
+    const newState = JSON.parse(JSON.stringify(state))
+    newState.list = action.value
+    console.log(action.value)
     return newState
   }
   console.log(state, action)
