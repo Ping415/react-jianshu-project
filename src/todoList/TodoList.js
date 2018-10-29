@@ -2,6 +2,7 @@ import React, { Component, Fragment } from "react";
 import "../mock/mock";
 import axios from "axios";
 import TodoItem from "./TodoItem";
+import store from '../store'
 
 import "./todoList.css";
 import "antd/dist/antd.css";
@@ -14,15 +15,20 @@ class TodoList extends Component {
   //最优先执行
   constructor(props) {
     super(props); //继承
+    console.log(store.getState())
     //组件状态
-    this.state = {
-      form: {
-        inputValue: ""
-      },
+    // this.state = {
+    //   form: {
+    //     inputValue: ""
+    //   },
 
-      list: []
-    };
+    //   list: []
+    // };
+    this.state = store.getState()
+    
     this.handleDeleteItem = this.handleDeleteItem.bind(this);
+    this.handleStoreChange = this.handleStoreChange.bind(this)
+    store.subscribe(this.handleStoreChange)
   }
 
   //挂载：组件第一次被放到页面时
@@ -53,8 +59,10 @@ class TodoList extends Component {
             onSubmit={this.handleBtnClick}
             style={{ width: "80%", margin: "auto" }}
           >
+          {/* initialValue初始化值 */}
             <FormItem {...formItemLayout} label="输入内容">
               {getFieldDecorator("inputValue", {
+                initialValue: this.state.form.inputValue,
                 rules: [
                   {
                     required: true,
@@ -68,7 +76,6 @@ class TodoList extends Component {
                     this.input = input;
                   }}
                   id="insertArea"
-                  // value={this.state.form.inputValue}
                   onChange={this.handleInputChange}
                   placeholder="请输入内容"
                 />
@@ -171,9 +178,14 @@ class TodoList extends Component {
         const list = res.data.data.list.map(item => {
           return item.title;
         });
-        this.setState(() => ({
-          list: list
-        }));
+        const action = {
+          type: 'get_state_list',
+          value: list
+        }
+        store.dispatch(action)
+        // this.setState(() => ({
+        //   list: list
+        // }));
       } else {
         console.log("error");
       }
@@ -183,6 +195,11 @@ class TodoList extends Component {
   }
 
   handleInputChange = e => {
+    const action = {
+      type: 'change_input_value',
+      value: e.target.value
+    }
+    store.dispatch(action)
     //异步
     //ref 尽量不要直接操作dom
     // const value = this.input.value
@@ -194,21 +211,32 @@ class TodoList extends Component {
     }));
     // this.setState({ inputValue: e.target.value });
   };
+
+  handleStoreChange() {
+    console.log("store change")
+    this.setState(store.getState())
+  }
+
   handleBtnClick = () => {
     //prevState之前的数据
     //setState 接收函数作为第二个参数，异步执行完函数后执行
     this.props.form.validateFields(err => {
       if (!err) {
-        this.setState(
-          prevState => ({
-            list: [...prevState.list, prevState.form.inputValue]
-          }),
-          () => {
-            this.props.form.resetFields();
-            // console.log(this.ul.querySelectorAll("div").length);
-          }
-        );
+        const action = {
+          type: 'add_todo_item',
+        }
+        store.dispatch(action)
+        // this.setState(
+        //   prevState => ({
+        //     list: [...prevState.list, prevState.form.inputValue]
+        //   }),
+        //   () => {
+        //     
+        //     // console.log(this.ul.querySelectorAll("div").length);
+        //   }
+        // );
       }
+      this.props.form.resetFields();
     });
 
     // this.setState({
