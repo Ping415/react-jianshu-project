@@ -2,7 +2,7 @@ import React, { Component, Fragment } from "react";
 import "../mock/mock";
 import axios from "axios";
 import TodoItem from "./TodoItem";
-import store from '../store'
+import store from "../store";
 
 import "./todoList.css";
 import "antd/dist/antd.css";
@@ -15,7 +15,7 @@ class TodoList extends Component {
   //最优先执行
   constructor(props) {
     super(props); //继承
-    console.log(store.getState())
+    console.log(store.getState());
     //组件状态
     // this.state = {
     //   form: {
@@ -24,11 +24,11 @@ class TodoList extends Component {
 
     //   list: []
     // };
-    this.state = store.getState()
-    
+    this.state = store.getState();
+
     this.handleDeleteItem = this.handleDeleteItem.bind(this);
-    this.handleStoreChange = this.handleStoreChange.bind(this)
-    store.subscribe(this.handleStoreChange)
+    this.handleStoreChange = this.handleStoreChange.bind(this);
+    store.subscribe(this.handleStoreChange);
   }
 
   //挂载：组件第一次被放到页面时
@@ -59,7 +59,7 @@ class TodoList extends Component {
             onSubmit={this.handleBtnClick}
             style={{ width: "80%", margin: "auto" }}
           >
-          {/* initialValue初始化值 */}
+            {/* initialValue初始化值 */}
             <FormItem {...formItemLayout} label="输入内容">
               {getFieldDecorator("inputValue", {
                 initialValue: this.state.form.inputValue,
@@ -119,7 +119,7 @@ class TodoList extends Component {
               <div>
                 <Popconfirm
                   title="确定删除?"
-                  onConfirm={this.handleDeleteItem}
+                  onConfirm={this.handleDeleteItem.bind(this,index)}
                   onCancel={this.cancel}
                   okText="确定"
                   cancelText="取消"
@@ -179,10 +179,10 @@ class TodoList extends Component {
           return item.title;
         });
         const action = {
-          type: 'get_todo_list',
+          type: "get_todo_list",
           value: list
-        }
-        store.dispatch(action)
+        };
+        store.dispatch(action);
         // this.setState(() => ({
         //   list: list
         // }));
@@ -196,10 +196,10 @@ class TodoList extends Component {
 
   handleInputChange = e => {
     const action = {
-      type: 'change_input_value',
+      type: "change_input_value",
       value: e.target.value
-    }
-    store.dispatch(action)
+    };
+    store.dispatch(action);
     //异步
     //ref 尽量不要直接操作dom
     // const value = this.input.value
@@ -213,8 +213,8 @@ class TodoList extends Component {
   };
 
   handleStoreChange() {
-    console.log("store change")
-    this.setState(store.getState())
+    console.log("store change");
+    this.setState(store.getState());
   }
 
   handleBtnClick = () => {
@@ -223,15 +223,15 @@ class TodoList extends Component {
     this.props.form.validateFields(err => {
       if (!err) {
         const action = {
-          type: 'add_todo_item',
-        }
-        store.dispatch(action)
+          type: "add_todo_item"
+        };
+        store.dispatch(action);
         // this.setState(
         //   prevState => ({
         //     list: [...prevState.list, prevState.form.inputValue]
         //   }),
         //   () => {
-        //     
+        //
         //     // console.log(this.ul.querySelectorAll("div").length);
         //   }
         // );
@@ -253,13 +253,13 @@ class TodoList extends Component {
     // this.setState({
     //   list: list
     // })
-    const list = [...this.state.list]
-
+    const list = [...this.state.list];
+    list.splice(index, 1);
     const action = {
-      type: 'delete_list_item',
-      value: list.splice(index, 1)
-    }
-    store.dispatch(action)
+      type: "delete_list_item",
+      value: list
+    };
+    store.dispatch(action);
 
     // this.setState(prevState => {
     //   const list = [...prevState.list];

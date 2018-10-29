@@ -31,7 +31,7 @@ export default (state = defaultState, action) => {
   if(action.type === 'delete_list_item') {
     const newState = JSON.parse(JSON.stringify(state))
     newState.list = action.value
-    console.log(action.value)
+    console.log(newState)
     return newState
   }
   console.log(state, action)
