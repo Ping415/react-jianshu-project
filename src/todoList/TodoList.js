@@ -3,6 +3,12 @@ import "../mock/mock";
 import axios from "axios";
 import TodoItem from "./TodoItem";
 import store from "../store";
+import {
+  getTodoList,
+  changeInputValue,
+  addTodoItem,
+  deleteTodoItem
+} from "../store/actionCreators.js";
 
 import "./todoList.css";
 import "antd/dist/antd.css";
@@ -119,7 +125,7 @@ class TodoList extends Component {
               <div>
                 <Popconfirm
                   title="确定删除?"
-                  onConfirm={this.handleDeleteItem.bind(this,index)}
+                  onConfirm={this.handleDeleteItem.bind(this, index)}
                   onCancel={this.cancel}
                   okText="确定"
                   cancelText="取消"
@@ -178,10 +184,7 @@ class TodoList extends Component {
         const list = res.data.data.list.map(item => {
           return item.title;
         });
-        const action = {
-          type: "get_todo_list",
-          value: list
-        };
+        const action = getTodoList(list);
         store.dispatch(action);
         // this.setState(() => ({
         //   list: list
@@ -195,10 +198,7 @@ class TodoList extends Component {
   }
 
   handleInputChange = e => {
-    const action = {
-      type: "change_input_value",
-      value: e.target.value
-    };
+    const action = changeInputValue(e.target.value);
     store.dispatch(action);
     //异步
     //ref 尽量不要直接操作dom
@@ -213,7 +213,7 @@ class TodoList extends Component {
   };
 
   handleStoreChange() {
-    console.log("store change");
+    // console.log("store change");
     this.setState(store.getState());
   }
 
@@ -222,9 +222,7 @@ class TodoList extends Component {
     //setState 接收函数作为第二个参数，异步执行完函数后执行
     this.props.form.validateFields(err => {
       if (!err) {
-        const action = {
-          type: "add_todo_item"
-        };
+        const action = addTodoItem();
         store.dispatch(action);
         // this.setState(
         //   prevState => ({
@@ -255,10 +253,7 @@ class TodoList extends Component {
     // })
     const list = [...this.state.list];
     list.splice(index, 1);
-    const action = {
-      type: "delete_list_item",
-      value: list
-    };
+    const action = deleteTodoItem(list);
     store.dispatch(action);
 
     // this.setState(prevState => {
