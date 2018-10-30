@@ -10,7 +10,7 @@ import {
   addTodoItem,
   deleteTodoItem
 } from "../store/actionCreators.js";
-
+import { getTodoListAction } from "../store/actions.js";
 import "./todoList.css";
 import "antd/dist/antd.css";
 import { Input, Button, Form, List, Popconfirm, Avatar, message } from "antd";
@@ -33,7 +33,7 @@ class TodoList extends Component {
     // };
     this.state = store.getState();
 
-    this.handleBtnClick = this.handleBtnClick.bind(this)
+    this.handleBtnClick = this.handleBtnClick.bind(this);
     this.handleDeleteItem = this.handleDeleteItem.bind(this);
     this.handleStoreChange = this.handleStoreChange.bind(this);
     //监听store变化
@@ -59,102 +59,6 @@ class TodoList extends Component {
         cancel={this.cancel}
       />
     );
-
-    // const { getFieldDecorator } = this.props.form;
-    // const formItemLayout = {
-    //   labelCol: {
-    //     xs: { span: 24 },
-    //     sm: { span: 4 }
-    //   },
-    //   wrapperCol: {
-    //     xs: { span: 24 },
-    //     sm: { span: 16 }
-    //   }
-    // };
-    // return (
-    //   // Fragment占位符
-    //   <Fragment>
-    //     <div>
-    //       <Form
-    //         ref="form"
-    //         onSubmit={this.handleBtnClick}
-    //         style={{ width: "80%", margin: "auto" }}
-    //       >
-    //         {/* initialValue初始化值 */}
-    //         <FormItem {...formItemLayout} label="输入内容">
-    //           {getFieldDecorator("inputValue", {
-    //             initialValue: this.state.form.inputValue,
-    //             rules: [
-    //               {
-    //                 required: true,
-    //                 message: "请输入内容"
-    //               }
-    //             ]
-    //           })(
-    //             <Input
-    //               style={{ width: "80%" }}
-    //               ref={input => {
-    //                 this.input = input;
-    //               }}
-    //               id="insertArea"
-    //               onChange={this.handleInputChange}
-    //               placeholder="请输入内容"
-    //             />
-    //           )}
-    //           <Button
-    //             type="primary"
-    //             style={{ marginLeft: "10px" }}
-    //             onClick={this.handleBtnClick}
-    //           >
-    //             提交
-    //           </Button>
-    //         </FormItem>
-    //       </Form>
-    //     </div>
-
-    //     {/* <ul
-    //       ref={ul => {
-    //         this.ul = ul;
-    //       }}
-    //     >
-    //       {this.getTodoItem()}
-    //     </ul> */}
-
-    //     <List
-    //       style={{ width: "70%", margin: "auto" }}
-    //       // header={<div>list</div>}
-    //       // footer={<div>Footer</div>}
-    //       bordered
-    //       dataSource={this.state.list}
-    //       renderItem={(item, index) => (
-    //         <List.Item>
-    //           {
-    //             <List.Item.Meta
-    //               avatar={
-    //                 <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-    //               }
-    //               title={index + 1}
-    //               description={item}
-    //             />
-    //           }
-    //           <div>
-    //             <Popconfirm
-    //               title="确定删除?"
-    //               onConfirm={this.handleDeleteItem.bind(this, index)}
-    //               onCancel={this.cancel}
-    //               okText="确定"
-    //               cancelText="取消"
-    //             >
-    //               <Button icon="delete" type="danger">
-    //                 删除
-    //               </Button>
-    //             </Popconfirm>
-    //           </div>
-    //         </List.Item>
-    //       )}
-    //     />
-    //   </Fragment>
-    // );
   }
 
   //页面挂载之后执行
@@ -180,7 +84,6 @@ class TodoList extends Component {
     // console.log("componentDidUpdate");
   }
 
-  
   getTodoItem() {
     return this.state.list.map((item, index) => {
       return (
@@ -195,22 +98,24 @@ class TodoList extends Component {
   }
 
   getItemContent() {
-    axios.get("/number").then(res => {
-      if (res.data.code === 0) {
-        const list = res.data.data.list.map(item => {
-          return item.title;
-        });
-        const action = getTodoList(list);
-        store.dispatch(action);
-        // this.setState(() => ({
-        //   list: list
-        // }));
-      } else {
-        console.log("error");
-      }
+    const action = getTodoListAction();
+    store.dispatch(action);
+    // axios.get("/todoList").then(res => {
+    //   if (res.data.code === 0) {
+    //     const list = res.data.data.list.map(item => {
+    //       return item.title;
+    //     });
+    //     const action = getTodoList(list);
+    //     store.dispatch(action);
+    //     // this.setState(() => ({
+    //     //   list: list
+    //     // }));
+    //   } else {
+    //     console.log("error");
+    //   }
 
-      console.log(res.data);
-    });
+    //   console.log(res.data);
+    // });
   }
 
   handleInputChange = e => {
@@ -237,9 +142,9 @@ class TodoList extends Component {
   handleBtnClick() {
     //prevState之前的数据
     //setState 接收函数作为第二个参数，异步执行完函数后执行
-    const form = this.props.form
+    const form = this.props.form;
     form.validateFields(err => {
-      if (!err && this.state.form.inputValue != '') {
+      if (!err && this.state.form.inputValue !== "") {
         const action = addTodoItem();
         store.dispatch(action);
         // this.setState(
@@ -251,8 +156,8 @@ class TodoList extends Component {
         //     // console.log(this.ul.querySelectorAll("div").length);
         //   }
         // );
-      }else {
-        message.error("请输入内容")
+      } else {
+        message.error("请输入内容");
       }
       form.resetFields();
     });
@@ -262,7 +167,7 @@ class TodoList extends Component {
     //   list: [...this.state.list, this.state.inputValue],
     //   inputValue: ""
     // });
-  };
+  }
   handleDeleteItem(index) {
     //immutable state不允许做任何改变
     // const list = [...this.state.list];//拷贝list
