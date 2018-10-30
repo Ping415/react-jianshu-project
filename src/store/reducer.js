@@ -8,7 +8,7 @@ import {
 } from "./actionTypes.js";
 const defaultState = {
   form: {
-    inputValue: "qqq"
+    inputValue: ""
   },
   list: []
 };

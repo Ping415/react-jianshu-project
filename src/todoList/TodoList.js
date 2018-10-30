@@ -13,7 +13,7 @@ import {
 
 import "./todoList.css";
 import "antd/dist/antd.css";
-import { Input, Button, Form, List, Popconfirm, Avatar } from "antd";
+import { Input, Button, Form, List, Popconfirm, Avatar, message } from "antd";
 const FormItem = Form.Item;
 
 // 当组件的props或state发生改变，render函数重新执行，页面发生改变
@@ -50,6 +50,7 @@ class TodoList extends Component {
     // console.log("render");
     return (
       <TodoListUI
+        form={this.props.form}
         inputValue={this.state.form.inputValue}
         list={this.state.list}
         handleInputChange={this.handleInputChange}
@@ -179,6 +180,7 @@ class TodoList extends Component {
     // console.log("componentDidUpdate");
   }
 
+  
   getTodoItem() {
     return this.state.list.map((item, index) => {
       return (
@@ -237,7 +239,7 @@ class TodoList extends Component {
     //setState 接收函数作为第二个参数，异步执行完函数后执行
     const form = this.props.form
     form.validateFields(err => {
-      if (!err) {
+      if (!err && this.state.form.inputValue != '') {
         const action = addTodoItem();
         store.dispatch(action);
         // this.setState(
@@ -249,6 +251,8 @@ class TodoList extends Component {
         //     // console.log(this.ul.querySelectorAll("div").length);
         //   }
         // );
+      }else {
+        message.error("请输入内容")
       }
       form.resetFields();
     });
