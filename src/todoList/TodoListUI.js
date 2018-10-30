@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Fragment } from "react";
 
 import { Input, Button, Form, List, Popconfirm, Avatar } from "antd";
 const FormItem = Form.Item;

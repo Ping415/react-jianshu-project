@@ -1,6 +1,6 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import "../mock/mock";
-import axios from "axios";
+// import axios from "axios";
 import TodoItem from "./TodoItem";
 import TodoListUI from "./TodoListUI";
 import store from "../store";
@@ -8,13 +8,13 @@ import {
   getTodoList,
   changeInputValue,
   addTodoItem,
-  deleteTodoItem
+  deleteTodoItem,
+  getTodoListAction,
+  getInitListAction
 } from "../store/actionCreators.js";
-import { getTodoListAction } from "../store/actions.js";
 import "./todoList.css";
 import "antd/dist/antd.css";
-import { Input, Button, Form, List, Popconfirm, Avatar, message } from "antd";
-const FormItem = Form.Item;
+import {  Form,  message } from "antd";
 
 // 当组件的props或state发生改变，render函数重新执行，页面发生改变
 
@@ -98,8 +98,16 @@ class TodoList extends Component {
   }
 
   getItemContent() {
+
+    //redux-saga
+    //const action = getInitListAction()
+    //store.dispatch(action)
+
+    //redux-thunk
     const action = getTodoListAction();
     store.dispatch(action);
+
+    //init
     // axios.get("/todoList").then(res => {
     //   if (res.data.code === 0) {
     //     const list = res.data.data.list.map(item => {
