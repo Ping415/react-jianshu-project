@@ -10,9 +10,8 @@ export const changeInputValue = (value) => ({
   value
 })
 
-export const addTodoItem = (value) => ({
+export const addTodoItem = () => ({
   type: ADD_TODO_ITEM,
-  value
 })
 
 export const deleteTodoItem = (value) => ({
