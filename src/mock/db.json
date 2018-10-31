@@ -1,0 +1,100 @@
+{
+  "stars": [
+    {
+      "name": "勒布朗·詹姆斯",
+      "age": 33,
+      "team": "骑士",
+      "size": 203,
+      "id": 10000
+    },
+    {
+      "id": 10001,
+      "name": "凯利·欧文",
+      "age": 25,
+      "team": "骑士",
+      "size": 191
+    },
+    {
+      "id": 10002,
+      "name": "德韦恩·韦德",
+      "age": 34,
+      "team": "公牛",
+      "size": 193
+    }
+  ],
+  "news": [
+    {
+      "title": "欧文交易暂停",
+      "id": 10000,
+      "date": "2017-08-24",
+      "link": "http://nba.com.cn/news/list/news_id=100",
+      "content": "由于以赛亚·托马斯体检未合格，骑士将重新评估刺激交易",
+      "comments": [
+        {
+          "authors": "小欧元",
+          "content": "厉害了我的哥！",
+          "time": "2017-08-25",
+          "star": "5"
+        },{
+          "authors": "小欧元",
+          "content": "厉害了我的哥！",
+          "time": "2017-08-25",
+          "star": "5"
+        },{
+          "authors": "小欧元",
+          "content": "厉害了我的哥！",
+          "time": "2017-08-25",
+          "star": "10"
+        }
+      ]
+    },{
+      "title": "欧文交易暂停",
+      "id": 10001,
+      "date": "2017-08-24",
+      "link": "http://nba.com.cn/news/list/news_id=100",
+      "content": "由于以赛亚·托马斯体检未合格，骑士将重新评估刺激交易",
+      "comments": [
+        {
+          "authors": "小欧元",
+          "content": "厉害了我的哥！",
+          "time": "2017-08-25",
+          "star": "5"
+        },{
+          "authors": "小欧元",
+          "content": "厉害了我的哥！",
+          "time": "2017-08-25",
+          "star": "5"
+        },{
+          "authors": "小欧元",
+          "content": "厉害了我的哥！",
+          "time": "2017-08-25",
+          "star": "10"
+        }
+      ]
+    },{
+      "title": "欧文交易暂停",
+      "id": 10002,
+      "date": "2017-08-24",
+      "link": "http://nba.com.cn/news/list/news_id=100",
+      "content": "由于以赛亚·托马斯体检未合格，骑士将重新评估刺激交易",
+      "comments": [
+        {
+          "authors": "小欧元",
+          "content": "厉害了我的哥！",
+          "time": "2017-08-25",
+          "star": "5"
+        },{
+          "authors": "小欧元",
+          "content": "厉害了我的哥！",
+          "time": "2017-08-25",
+          "star": "5"
+        },{
+          "authors": "小欧元",
+          "content": "厉害了我的哥！",
+          "time": "2017-08-25",
+          "star": "10"
+        }
+      ]
+    }
+  ]
+}
