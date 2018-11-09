@@ -1,0 +1,20 @@
+.ant-btn-circle,
+.ant-btn-circle-outline {
+  float: right;
+  margin-top: 12px;
+  line-height: 32px;
+  border-radius: 19px;
+  border: 1px solid #ec6149;
+  padding: 0 20px;
+  margin-right: 20px;
+  min-width: 80px;
+  font-size: 14px;
+  &.reg {
+    color: #ec6149;
+  }
+  &.write {
+    color: #fff;
+    width: 100px;
+    background: #ec6149;
+  }
+}

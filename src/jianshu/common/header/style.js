@@ -8,7 +8,7 @@ export const HeaderWrapper = styled.div`
   border-bottom: 1px solid #f0f0f0;
 `
 export const Logo = styled.a.attrs({
-  href: '/'
+  href: '/',
 })`
   height: 58px;
   position: absolute;
@@ -41,7 +41,7 @@ export const NavItem = styled.div`
   }
 `
 export const NavSearch = styled.input.attrs({
-  placeholder: '搜索'
+  placeholder: '搜索',
 })`
   width: 160px;
   height: 38px;
@@ -52,4 +52,15 @@ export const NavSearch = styled.input.attrs({
   border-radius: 19px;
   outline: none;
   background: #eee;
+  font-size: 14px;
+  margin-left: 20px;
+  &::placeholder {
+    color: #999;
+  }
+`
+export const Addition = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 56px;
 `
