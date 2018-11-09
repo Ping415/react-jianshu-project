@@ -24,6 +24,23 @@ export const Nav = styled.div`
   height: 100%;
   margin: 0 auto;
 `
+export const SearchWrapper = styled.div`
+  position: relative;
+  float: left
+  .slide-enter {
+    transition: all .2s ease-out;
+  }
+  .slide-enter-active {
+    width: 240px;
+  }
+  .slide-exit {
+    transition: all .2s ease-out;
+  }
+  .slide-exit-active {
+    width: 160px;
+  }
+`
+
 export const NavItem = styled.div`
   line-height: 56px;
   padding: 0 15px;
@@ -56,6 +73,9 @@ export const NavSearch = styled.input.attrs({
   margin-left: 20px;
   &::placeholder {
     color: #999;
+  }
+  &.focused {
+    width: 240px;
   }
 `
 export const Addition = styled.div`
