@@ -16,13 +16,6 @@ import "./style.scss";
 import { actionCreators } from "./store/index";
 
 class Header extends Component {
-  // constructor(props) {
-  //   super(props);
-
-  //   this.state = {
-  //     focused: false
-  //   };
-  // }
   render() {
     const { focused, handleInputFocus, handleInputBlur } = this.props;
     return (
@@ -58,17 +51,10 @@ class Header extends Component {
     );
   }
 
-  // handleInputFocus = () => {
-  //   this.setState({ focused: true });
-  // };
-
-  // handleInputBlur = () => {
-  //   this.setState({ focused: false });
-  // };
 }
 const mapStateToProps = state => {
   return {
-    focused: state.header.focused
+    focused: state.header.get("focused")
   };
 };
 
