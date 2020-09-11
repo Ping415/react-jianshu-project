@@ -7,7 +7,7 @@
     "axios": "^0.18.0",
     "immutable": "^4.0.0-rc.12",
     "mockjs": "^1.0.1-beta3",
-    "node-sass": "^4.10.0",
+    "node-sass": "^4.13.1",
     "react": "^16.6.0",
     "react-dom": "^16.6.0",
     "react-redux": "^5.1.0",
